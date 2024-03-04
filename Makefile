@@ -17,6 +17,7 @@ libs:
 	$(COMPILER) ./lib/nsuref.trp -l
 	$(COMPILER) ./lib/string.trp -l
 	$(COMPILER) ./lib/printService.trp -l
+	$(COMPILER) ./lib/quickselect.trp -l
 	$(COMPILER) ./lib/lists.trp -l
 	$(COMPILER) ./lib/declassifyutil.trp -l 
 	$(COMPILER) ./lib/stdio.trp -l 

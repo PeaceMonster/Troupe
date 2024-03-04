@@ -1,17 +1,26 @@
 import lists
-let fun pingpong () =
-      let 
-          val {counter, pid=sender} = receive [hn x => x]
-          val _ = send (sender, {counter=counter + 1, pid=self()})
-          val _ = print counter
-      in pingpong()
-      end
+let fun pingpong1 () =
+    let 
+        val p_id = receive[hn ("ping", p_id) => 
+            let val _ = print "ping"
+            in p_id
+            end] 
+        val _ = send (p_id, "pong")
+    in pingpong1()
+    end
 
-in let val processA = spawn ("@pingpong-listener", pingpong)
+    fun pingpong2 processA =
+    let 
+        val _ = send (processA, ("ping", (self())))
+        val msg = receive[hn x => x]
+        val _ = print msg
+    in pingpong2 processA
+    end
+
+in let val processA = spawn ("@pingpong-listener1", pingpong1)
         val _ = print processA
-        val processB = spawn ("@pingpong-dialer", pingpong)
+        val processB = spawn ("@pingpong-listener2", fn () => pingpong2 processA)
         val _ = print processB
-        val _ = send (processA,{counter = 1, pid =processB})
     in ()
     end
 end
