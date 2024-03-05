@@ -73,6 +73,14 @@ let fun map f list =
     [] => []
     | h :: _ => h
 
+    fun slice beg s_end l = case (beg, s_end, l) of
+      (_, _, []) => []
+    | (0, 0, _) => []
+    | (0, n, h :: t) => if n > 0 then h :: (slice beg (n - 1) t) else ()
+    | (m, n, h :: t) => if m > 0 then slice (m - 1) (n - 1) t else ()
+    | (_, _, _) => ()
+  
+
 in
     [ ("map",     map)
     , ("mapi",    mapi)
@@ -88,5 +96,6 @@ in
     , ("contains", contains)
     , ("filter", filter)
     , ("first", first)
+    , ("slice", slice)
     ]
 end

@@ -12,3 +12,4 @@ nth
 contains
 filter
 first
+slice
