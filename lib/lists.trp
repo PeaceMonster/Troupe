@@ -9,8 +9,6 @@ let fun map f list =
             |  (x::xs) => (f (j,x)) :: (mapj (j+1) xs)
     in mapj 0 list
     end
-    
-    
 
     fun foldl f y [] = y
       | foldl f y (x::xs) = foldl f (f (x,y)) xs
@@ -76,9 +74,15 @@ let fun map f list =
     fun slice beg s_end l = case (beg, s_end, l) of
       (_, _, []) => []
     | (0, 0, _) => []
-    | (0, n, h :: t) => if n > 0 then h :: (slice beg (n - 1) t) else ()
-    | (m, n, h :: t) => if m > 0 then slice (m - 1) (n - 1) t else ()
-    | (_, _, _) => ()
+    | (0, n, h :: t) => h :: (slice beg (n - 1) t)
+    | (m, n, h :: t) => slice (m - 1) (n - 1) t
+    | (_, _, _) => []
+
+    fun insert_at_index l appended_l index =
+      let val beg_slice = slice 0 index l
+          val end_slice = slice index (length l) l
+      in append beg_slice (append appended_l end_slice)
+    end
   
 
 in
@@ -97,5 +101,6 @@ in
     , ("filter", filter)
     , ("first", first)
     , ("slice", slice)
+    , ("insert_at_index", insert_at_index)
     ]
 end

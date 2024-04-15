@@ -1,8 +1,9 @@
 import lists
 let 
     fun is_even i = i mod 2 = 0
-    fun quickselect arr k = 
-        case arr of
+
+    fun quickselect list k = 
+        case list of
         [] => "ERROR: Empty list"
         | h :: t =>
             let val (ys, zs) = partition (fn x => x > h) t
@@ -12,10 +13,11 @@ let
                 else if k > l then quickselect zs (k-l-1)
                 else h
             end
-    fun median arr = 
-        let val len = length arr
+
+    fun median list = 
+        let val len = length list
             val middle = if is_even len then len / 2 - 1 else (len - 1) / 2
-        in quickselect arr (middle)
+        in quickselect list (middle)
     end
 in 
     [ ("quickselect", quickselect),

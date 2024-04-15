@@ -13,3 +13,4 @@ contains
 filter
 first
 slice
+insert_at_index
